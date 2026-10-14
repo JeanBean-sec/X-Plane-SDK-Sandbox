@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36915.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xphello", "xphello.vcxproj", "{C13EB47C-622C-4CB0-8502-537FB0307326}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C13EB47C-622C-4CB0-8502-537FB0307326}.Debug|x64.ActiveCfg = Debug|x64
+		{C13EB47C-622C-4CB0-8502-537FB0307326}.Debug|x64.Build.0 = Debug|x64
+		{C13EB47C-622C-4CB0-8502-537FB0307326}.Release|x64.ActiveCfg = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {94FEE829-9611-4259-A383-79D24804D20A}
+	EndGlobalSection
+EndGlobal
