@@ -1,8 +1,12 @@
-# This repo contains documentation related to the developement and maintenance of virtual avionics systems via flight simulation interfaces.
+# XPLM Sandbox 
 
-# Currently in working development
+(C++ & C & Julia & Python & Lua & Ada & Aws....)
 
-# For now, here is a list of available telnet commands for testing with X-Plane.
+This repo contains documentation related to the developement and maintenance of virtual avionics systems via flight simulation interfaces.
+
+Currently in working development
+
+### For now, here is a list of available telnet commands for testing with X-Plane.
 ```
 acf <string:acf_path> - ALIAS plane <acf_path>
 actor add <string> <string> <int> <float> <float> <float>  - UNDOCUMENTED
@@ -481,11 +485,8 @@ start new flight <string> - Start a new flight, the string argument is a path to
 start new flight <string> <string> - Start a new flight, the string argument is a path to the init json file. The second
  argument is the expected return value.
 start plane <string:acf_path> <apt_id> - Specify the aircraft type and an airport ID.
-start plane <string:acf_path> <apt_id> <init_flt_enum> - Like the plane command, but allows you to specify the start typ
-e, too. Valid start types include: loc_specify_lle, loc_ram (ramp), loc_tak (takeoff on runway), loc_vfr (short approach
-), loc_ifr (long approach)
-start plane <string:acf_path> <apt_id> <init_flt_enum> <string:ramp_or_runway> - Like the plane command, but allows you
-to specify the start type and runway, too. Valid start type is loc_tak (takeoff on runway).
+start plane <string:acf_path> <apt_id> <init_flt_enum> - Like the plane command, but allows you to specify the start type, too. Valid start types include: loc_specify_lle, loc_ram (ramp), loc_tak (takeoff on runway), loc_vfr (short approach), loc_ifr (long approach)
+start plane <string:acf_path> <apt_id> <init_flt_enum> <string:ramp_or_runway> - Like the plane command, but allows you to specify the start type and runway, too. Valid start type is loc_tak (takeoff on runway).
 stat <string> - Prints an art control to the output pipe
 stat <string> <UTL_stat_type> - Prints a UTL_stat to the output pipe at the appropriate time for its type
 stat set <string> <float> - Sets an art control to the given value
@@ -504,8 +505,7 @@ tman requeue - Force reload of all pageable textures.
 type <string> - Simulates typing the indicated text, one keypress every other frame
 uncheck <string> - Un-checks the checkbox with the specified text if and only if that box was previously checked
 update current flight <string> - Update the current flight, the string argument is a path to the init json file.
-update current flight <string> <string> - Update the current flight, the string argument is a path to the init json file
-. The second argument is the expected return value.
+update current flight <string> <string> - Update the current flight, the string argument is a path to the init json file. The second argument is the expected return value.
 video_recording start - Start a video recording with the default filename
 video_recording start <string> - Start a video recording with the specified filename
 video_recording stop - Stop a previously started video recording
@@ -513,30 +513,23 @@ wait <float:seconds> - Wait a number of seconds real-time, ignoring sim rate
 wait <float:seconds> sim_time - Wait a number of seconds of sim-time
 wait atc filed <float> - Wait for p0 to file a flightplan for a number of seconds
 wait atc segment <string> <float> - Wait for p0 to be on a specific ATC segment type for a number of seconds
-wait atc segment <string> <string> <float> - Wait for p0 to be on a specific ATC segment type and subtype for a number o
-f seconds
+wait atc segment <string> <string> <float> - Wait for p0 to be on a specific ATC segment type and subtype for a number of seconds
 wait atc status <string> <float> - Wait for p0 to reach a specific status for a number of seconds
 wait atc veczone <string> <float> - Wait for p0 to be in a specific ATC vector zone for a number of seconds
 wait flight_started <float> - Waits the specified number of seconds until a flight is loaded
-wait radio_clear <float:freq> <float:seconds> - Waits the specified number of seconds until the radio frequency is not t
-ransmitting
-wait radio_readback_clear <float:freq> <float:seconds> - Waits the specified number of seconds until there is no outstan
-ding readback
-wait radio_response_clear <float:freq> <float:seconds> - Waits the specified number of seconds until the pilot's message
- and ATC's response are complete
+wait radio_clear <float:freq> <float:seconds> - Waits the specified number of seconds until the radio frequency is not transmitting
+wait radio_readback_clear <float:freq> <float:seconds> - Waits the specified number of seconds until there is no outstanding readback
+wait radio_response_clear <float:freq> <float:seconds> - Waits the specified number of seconds until the pilot's message and ATC's response are complete
 wait text <string> - Waits indefinitely for the given text to exist in the widget hierarchy
 wait text <string> <float> - Waits up to the specified amount of time (in seconds) for the given text to exist in the wi
 dget hierarchy
 wait ui <string> - Waits indefinitely for a screen with the given debug name to exist in the widget hierarchy
-wait ui <string> <float> - Waits up to the specified amount of time (in seconds) for a screen with the given debug name
-to exist in the widget hierarchy
+wait ui <string> <float> - Waits up to the specified amount of time (in seconds) for a screen with the given debug name to exist in the widget hierarchy
 wait wxr tick - Wait until the next real-weather tick, currently every 60 seconds
 weather dump - Prints the current UI weather to CLI.
 weather metar <string:metar>  - UNDOCUMENTED
-weather point <float:latitude> <float:longitude> <float:elevation_mtr> <float:radius_nm> <string:metar> - Set point weat
-her at <lat> <long> <ele_m> <radius_nm>, using METAR <string>. METAR location and time should not be given.
-weather point <float:radius_nm> <string:metar> - Set point weather with <radius_nm>, using METAR <string>. METAR time is
- ignored.
+weather point <float:latitude> <float:longitude> <float:elevation_mtr> <float:radius_nm> <string:metar> - Set point weather at <lat> <long> <ele_m> <radius_nm>, using METAR <string>. METAR location and time should not be given.
+weather point <float:radius_nm> <string:metar> - Set point weather with <radius_nm>, using METAR <string>. METAR time is ignored.
 weather point clear - Clear all point weather set from the CLI
 weather point clear <apt_id> - Clear point weather for <apt_id> set from the CLI
 weather point clear <float:latitude> <float:longitude> - Clear point weather at <lat> <long> set from the CLI
