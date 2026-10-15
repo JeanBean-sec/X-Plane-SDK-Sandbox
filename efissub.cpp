@@ -7,17 +7,11 @@
 #include "XPLMWeather.h"
 #include "XPLMDataAccess.h"
 #include "XPLMProcessing.h"
+#include "dat_trans.h"
 
 #include <string.h>
 #include <fstream>
 // the acfutil library breaks these include lines so be careful
-
-#define XPLM_NUM_WIND_LAYERS 13
-#define XPLM_NUM_CLOUD_LAYERS 3
-#define XPLM_NUM_TEMPERATURE_LAYERS 13
-#define XPLM_WIND_UNDEFINED_LAYER
-#define XPLM_DEFAULT_WXR_RADIUS_NM 30
-#define XPLM_DEFAULT_WXR_LIMIT_MSL_FT 10000
 
 
 #if IBM
@@ -61,11 +55,18 @@ float visibility = 0.0f;
 
 float elapsed = 0.0f;
 
+dat_trans data_transfer;
+
+float uncorrected_baro_altitude = 0.0f;
+
 float simpleflightloop(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon) 
 {
+	//custom data transfer object
+	uncorrected_baro_altitude = data_transfer.getUncorrectedBaroAltitude();
+
 	elapsed = XPLMGetElapsedTime();
 	
-	return 1.0f;
+	return 10.0f;
 }
 
 
@@ -140,6 +141,7 @@ PLUGIN_API int XPluginStart(
 	// Opt-in to styling our window like an X-Plane 11 native window
 	// If you're on XPLM300, not XPLM301, swap this enum for the literal value 1.
 	params.decorateAsFloatingWindow = xplm_WindowDecorationRoundRectangle;
+	
 
 	// Set the window's initial bounds
 	// Note that we're not guaranteed that the main monitor's lower left is at (0, 0)...
@@ -157,7 +159,7 @@ PLUGIN_API int XPluginStart(
 	XPLMSetWindowPositioningMode(g_window, xplm_WindowPositionFree, -1);
 	// Limit resizing our window: maintain a minimum width/height of 100 boxels and a max width/height of 300 boxels
 	XPLMSetWindowResizingLimits(g_window, 200, 200, 300, 300);
-	XPLMSetWindowTitle(g_window, "Sample Window");
+	XPLMSetWindowTitle(g_window, "Monitoring");
 
 	return g_window != NULL;
 }
@@ -171,6 +173,8 @@ PLUGIN_API void	XPluginStop(void)
 
 PLUGIN_API void XPluginDisable(void) {}
 PLUGIN_API int  XPluginEnable(void) { 
+
+
 
 	// Find variables when flight engine initializes
 	g_lat_ref = XPLMFindDataRef("sim/flightmodel/position/latitude");
@@ -222,5 +226,5 @@ void	draw_hello_world(XPLMWindowID in_window_id, void* in_refcon)
 
 	XPLMDrawString(col_white, l + 10, t - 30, "Ambient visibility", NULL, xplmFont_Proportional);
 	XPLMDrawNumber(col_white, l + 20, t - 50, visibility, 1, 5, 0, xplmFont_Proportional);
-	XPLMDrawNumber(col_white, l + 40, t - 70, elapsed, 1, 5, 0, xplmFont_Proportional);
+	XPLMDrawNumber(col_white, l + 40, t - 70, uncorrected_baro_altitude, 1, 5, 0, xplmFont_Proportional);
 }
