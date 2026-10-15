@@ -18,5 +18,13 @@
     <ClCompile Include="efissub.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dat_trans.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dat_trans.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
