@@ -159,7 +159,7 @@ PLUGIN_API int XPluginStart(
 	XPLMSetWindowPositioningMode(g_window, xplm_WindowPositionFree, -1);
 	// Limit resizing our window: maintain a minimum width/height of 100 boxels and a max width/height of 300 boxels
 	XPLMSetWindowResizingLimits(g_window, 200, 200, 300, 300);
-	XPLMSetWindowTitle(g_window, "Monitoring");
+	XPLMSetWindowTitle(g_window, "DTO Monitoring");
 
 	return g_window != NULL;
 }
@@ -224,7 +224,7 @@ void	draw_hello_world(XPLMWindowID in_window_id, void* in_refcon)
 
 
 
-	XPLMDrawString(col_white, l + 10, t - 30, "Ambient visibility", NULL, xplmFont_Proportional);
+	XPLMDrawString(col_white, l + 20, t - 60, "Uncorrected Baro Altitude:", NULL, xplmFont_Proportional);
 	XPLMDrawNumber(col_white, l + 20, t - 50, visibility, 1, 5, 0, xplmFont_Proportional);
 	XPLMDrawNumber(col_white, l + 40, t - 70, uncorrected_baro_altitude, 1, 5, 0, xplmFont_Proportional);
 }
