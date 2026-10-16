@@ -6,6 +6,11 @@ This repo contains documentation related to the developement and maintenance of 
 
 Currently in working development
 
+### DTO Testing
+https://github.com/user-attachments/assets/952647be-a6e4-4317-af6c-f1a45a2853d4
+### XplaneConnectX Testing
+https://github.com/user-attachments/assets/42b0df7b-bc87-46b3-9c38-b56591d928a2
+
 ### For now, here is a list of available telnet commands and cli flags for testing with X-Plane.
 ```
 acf <string:acf_path> - ALIAS plane <acf_path>
