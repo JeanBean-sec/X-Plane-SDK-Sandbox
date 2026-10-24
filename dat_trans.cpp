@@ -32,99 +32,114 @@ XPLMDataRef drLocalizerArmed = nullptr;
 XPLMDataRef drILSFrequencySet = nullptr;
 XPLMDataRef drSelectedRunwayHeading = nullptr;
 
+	dat_trans::dat_trans() {
+		drUncorrectedBaroAltitude = XPLMFindDataRef("sim/flightmodel/misc/h_ind");
+		drCorrectedBaroAltitude = nullptr;
+		drAltitudeRate = XPLMFindDataRef("sim/flightmodel/position/vh_ind_fpm");;
+		drComputedAirspeed = nullptr;
+		drTrueAirspeed = XPLMFindDataRef("sim/flightmodel/forces/vx_air_on_acf");
+		drStaticAirTemperature = XPLMFindDataRef("sim/cockpit2/temperature/outside_air_temp_degc");
+		drRadioAltitude = XPLMFindDataRef("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot");
+		drComputedTerrainClearance = nullptr;
+		drDecisionHeight = XPLMFindDataRef("sim/cockpit/misc/radio_altimeter_minimum");
+		drPitchAltitude = XPLMFindDataRef("sim/flightmodel/position/true_theta");
+		drRollAltitude = XPLMFindDataRef("sim/flightmodel/position/true_phi");
+		drLatitudePosition = XPLMFindDataRef("sim/flightmodel/position/latitude");
+		drLongitudePosition = XPLMFindDataRef("sim/flightmodel/position/longitude");
+		drBodyNormalAcceleration = XPLMFindDataRef("sim/flightmodel/forces/g_nrml");
+		drBodyLongitudinalAcceleration = XPLMFindDataRef("sim/flightmodel/forces/g_axil");
+		drMagneticTrackAngle = XPLMFindDataRef("sim/cockpit2/gauges/indicators/ground_track_mag_pilot");
+		drTrueTrackAngle = XPLMFindDataRef("sim/cockpit2/tcas/targets/position/hpath");
+		drTrueHeading = XPLMFindDataRef("sim/flightmodel/position/true_psi");
+		drMagneticHeading = XPLMFindDataRef("sim/flightmodel/position/mag_psi");
+		drInertialAltitude = XPLMFindDataRef("sim/flightmodel/position/elevation"); //meters
+		drGroundSpeed = XPLMFindDataRef("sim/flightmodel/position/groundspeed");
+		drHFOM = nullptr;
+		drVFOM = nullptr;
+		drHDOP = nullptr;
+		drVDOP = nullptr;
+		drHIL = nullptr;
+		drGlideSlopeDeviation = nullptr;
+		drLocalizerArmed = XPLMFindDataRef("sim/cockpit2/autopilot/hnav_armed");
+		drILSFrequencySet = XPLMFindDataRef("sim/cockpit2/autopilot/glideslope_armed");
+		drSelectedRunwayHeading = nullptr;
+	}
+
 
 	double dat_trans::getUncorrectedBaroAltitude() {
-		drUncorrectedBaroAltitude = XPLMFindDataRef("sim/flightmodel/misc/h_ind");
 		return XPLMGetDataf(drUncorrectedBaroAltitude);
 	};
 
 	//double dat_trans::getCorrectedBaroAltitude() {};
 
 	double dat_trans::getAltitudeRate() {
-		drAltitudeRate = XPLMFindDataRef("sim/flightmodel/position/vh_ind_fpm2");
 		return XPLMGetDataf(drAltitudeRate);
 	};
 	//double dat_trans::getComputedAirspeed() {}; //processed TODO
 
 	double dat_trans::getTrueAirspeed() {
-		drTrueAirspeed = XPLMFindDataRef("sim/flightmodel/forces/vx_air_on_acf");
 		return XPLMGetDataf(drTrueAirspeed);
 	};
 
 	double dat_trans::getStaticAirTemperature() {
-		drStaticAirTemperature = XPLMFindDataRef("sim/cockpit2/temperature/outside_air_temp_degc");
 		return XPLMGetDataf(drStaticAirTemperature);
 	};
 
 	double dat_trans::getRadioAltitude() {
-		drRadioAltitude = XPLMFindDataRef("sim/flightmodel/position/y_agl");
 		return XPLMGetDataf(drRadioAltitude);
 	};
 
 	//double dat_trans::getComputedTerrainClearance() {}; //processed TODO
 
 	double dat_trans::getDecisionHeight() {
-		drDecisionHeight = XPLMFindDataRef("sim/cockpit/misc/radio_altimeter_minimum");
 		return XPLMGetDataf(drDecisionHeight);
 	};
 
 	double dat_trans::getPitchAltitude() {
-		drPitchAltitude = XPLMFindDataRef("sim/flightmodel/position/true_theta");
 		return XPLMGetDataf(drPitchAltitude);
 	};
 
 	double dat_trans::getRollAltitude() {
-		drRollAltitude = XPLMFindDataRef("sim/flightmodel/position/true_phi");
 		return XPLMGetDataf(drRollAltitude);
 	};
 
 	double dat_trans::getLatitudePosition() {
-		drLatitudePosition = XPLMFindDataRef("sim/flightmodel/position/latitude");
 		return XPLMGetDataf(drLatitudePosition);
 	};
 
 	double dat_trans::getLongitudePosition() {
-		drLongitudePosition = XPLMFindDataRef("sim/flightmodel/position/longitude");
 		return XPLMGetDataf(drLongitudePosition);
 	};
 
 	double dat_trans::getBodyNormalAcceleration() {
-		drBodyNormalAcceleration = XPLMFindDataRef("sim/flightmodel/forces/g_nrml");
 		return XPLMGetDataf(drBodyNormalAcceleration);
 	};
 
 	double dat_trans::getBodyLongitudinalAcceleration() {
-		drBodyLongitudinalAcceleration = XPLMFindDataRef("sim/flightmodel/forces/g_axil");
 		return XPLMGetDataf(drBodyLongitudinalAcceleration);
 	};
 
 	double dat_trans::getMagneticTrackAngle() {
-		drMagneticTrackAngle = XPLMFindDataRef("sim/cockpit2/gauges/indicators/ground_track_mag_pilot");
 		return XPLMGetDataf(drMagneticTrackAngle);
 	};
 
 	double dat_trans::getTrueTrackAngle() {
-		drTrueTrackAngle = XPLMFindDataRef("sim/cockpit2/tcas/targets/position/hpath");
 		return XPLMGetDataf(drTrueTrackAngle);
 	};
 
 	double dat_trans::getTrueHeading() {
-		drTrueHeading = XPLMFindDataRef("sim/flightmodel/position/true_psi");
 		return XPLMGetDataf(drTrueHeading);
 	};
 
 	double dat_trans::getMagneticHeading() {
-		drMagneticHeading = XPLMFindDataRef("sim/flightmodel/position/mag_psi");
 		return XPLMGetDataf(drMagneticHeading);
 	};
 
 	double dat_trans::getInertialAltitude() {
-		drInertialAltitude = XPLMFindDataRef("sim/flightmodel/position/elevation"); //meters
 		return XPLMGetDataf(drInertialAltitude);
 	};
 
 	double dat_trans::getGroundSpeed() {
-		drGroundSpeed = XPLMFindDataRef("sim;/flightmodel/position/groundspeed");
 		return XPLMGetDataf(drGroundSpeed);
 	};
 
@@ -142,18 +157,13 @@ XPLMDataRef drSelectedRunwayHeading = nullptr;
 
 
 
-	double dat_trans::getGlideSlopeDeviation() {
-		drGlideSlopeDeviation = XPLMFindDataRef("sim/cockpit/warnings/annunciators/glideslope");
-		return XPLMGetDataf(drGlideSlopeDeviation);
-	};
+	//double dat_trans::getGlideSlopeDeviation() {};
 
 	double dat_trans::getLocalizerArmed() {
-		drLocalizerArmed = XPLMFindDataRef("sim/cockpit2/autopilot/hnav_armed");
 		return XPLMGetDataf(drLocalizerArmed);
 	};
 
 	bool dat_trans::isILSFrequencySet() {
-		drILSFrequencySet = XPLMFindDataRef("sim/cockpit2/autopilot/glideslope_armed");
 		return XPLMGetDataf(drILSFrequencySet);
 	};
 

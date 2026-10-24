@@ -61,6 +61,7 @@
   <ItemGroup>
     <ClCompile Include="dat_trans.cpp" />
     <ClCompile Include="efissub.cpp" />
+    <ClCompile Include="egpws.cpp" />
     <ClCompile Include="SDK\CHeaders\Wrappers\XPCBroadcaster.cpp" />
     <ClCompile Include="SDK\CHeaders\Wrappers\XPCDisplay.cpp" />
     <ClCompile Include="SDK\CHeaders\Wrappers\XPCListener.cpp" />
@@ -70,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dat_trans.h" />
+    <ClInclude Include="egpws.h" />
     <ClInclude Include="include\acfutils\acf_file.h" />
     <ClInclude Include="include\acfutils\airportdb.h" />
     <ClInclude Include="include\acfutils\apps.h" />

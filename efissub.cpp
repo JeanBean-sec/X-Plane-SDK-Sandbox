@@ -1,5 +1,5 @@
-#define XPLM400 1
-#define XPLM420 1
+#define XPLM400
+#define XPLM420
 
 #include "XPLMDisplay.h"
 #include "XPLMGraphics.h"
@@ -8,6 +8,7 @@
 #include "XPLMDataAccess.h"
 #include "XPLMProcessing.h"
 #include "dat_trans.h"
+#include "egpws.h"
 
 #include <string.h>
 #include <fstream>
@@ -29,8 +30,12 @@
 // An opaque handle to the window we will create
 static XPLMWindowID	g_window;
 
+
+// An opaque handle to the flight loop we will create
 static XPLMFlightLoopID simple_loop;
 
+
+//null dataref handles
 static XPLMDataRef  g_lat_ref = nullptr;
 static XPLMDataRef  g_lon_ref = nullptr;
 static XPLMDataRef  g_alt_ref = nullptr;
@@ -45,7 +50,7 @@ static XPLMCursorStatus	dummy_cursor_status_handler(XPLMWindowID in_window_id, i
 static int					dummy_wheel_handler(XPLMWindowID in_window_id, int x, int y, int wheel, int clicks, void* in_refcon) { return 0; }
 static void				dummy_key_handler(XPLMWindowID in_window_id, char key, XPLMKeyFlags flags, char virtual_key, void* in_refcon, int losing_focus) {}
 
-//callback protos
+//flightloopcallback protos
 static float QueryWeatherCallback(){}
 static float simpleflightloop(){}
 
@@ -57,20 +62,41 @@ float elapsed = 0.0f;
 
 dat_trans data_transfer;
 
-float uncorrected_baro_altitude = 0.0f;
 
-float simpleflightloop(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon) 
-{
-	//custom data transfer object
-	uncorrected_baro_altitude = data_transfer.getUncorrectedBaroAltitude();
+double altituderate = 0.0f; //sim/flightmodel/position/vh_ind_fpm
+double radioaltitude = 0.0f; //sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot
 
-	elapsed = XPLMGetElapsedTime();
-	
-	return 10.0f;
+
+//initialize objects
+static Mode1 mode1;
+
+//initialize sinkrate dataref
+XPLMDataRef drSinkRate = NULL;
+int drSinkRateValue;
+
+int GetSinkRateCB(void* inRefcon) {
+	return drSinkRateValue;
+};
+void SetSinkRateCB(void* inRefcon, int inValue) {
+	drSinkRateValue = inValue;
 }
 
 
-float QueryWeatherCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon)
+static float simpleflightloop(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon) 
+{
+	//custom data transfer object
+	altituderate = data_transfer.getAltitudeRate();
+	radioaltitude = data_transfer.getRadioAltitude();
+
+	elapsed = XPLMGetElapsedTime();
+
+	mode1.EvaluateMode(radioaltitude, altituderate);
+	
+	return 0.001f; //1hz / 100ms update rate
+}
+
+
+static float QueryWeatherCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon)
 {
 	// 1. Ensure DataRefs are valid
 	if (!g_lat_ref || !g_lon_ref || !g_alt_ref) {
@@ -84,6 +110,7 @@ float QueryWeatherCallback(float inElapsedSinceLastCall, float inElapsedTimeSinc
 
 	// 3. Secure heap allocation for the large struct
 	XPLMWeatherInfo_t weather;
+	weather = { 0 };
 	weather.structSize = sizeof(weather);
 
 	// 4. Query the operational weather engine safely
@@ -121,11 +148,30 @@ PLUGIN_API int XPluginStart(
 	strcpy(outSig, "xpsdk.examples.helloworld3plugin");
 	strcpy(outDesc, "A Hello World plug-in for the XPLM300 SDK.");
 
+	// DataRef setup for pullup activation
+
+
+	drSinkRate = XPLMRegisterDataAccessor(
+		"egpws/sinkrate",
+		xplmType_Int,
+		1,
+		GetSinkRateCB, SetSinkRateCB,
+		NULL, NULL,
+		NULL, NULL,
+		NULL, NULL,
+		NULL, NULL,
+		NULL, NULL,
+		NULL, NULL);
+
+	drSinkRate = XPLMFindDataRef("egpws/sinkrate");
+	XPLMSetDatai(drSinkRate, 0); // Initialize to 0 (inactive)
+
 	XPLMMenuID MENU;
 
 	MENU = XPLMCreateMenu("hello", NULL, NULL, MyMenuHandlerCallback, 0);
 
 	XPLMCreateWindow_t params;
+	params = { 0 };
 	params.structSize = sizeof(params);
 	params.visible = 1;
 	params.drawWindowFunc = draw_hello_world;
@@ -183,6 +229,7 @@ PLUGIN_API int  XPluginEnable(void) {
 
 	// additional simple loop creation
 	XPLMCreateFlightLoop_t params;
+	params = { 0 };
 	params.callbackFunc = simpleflightloop;
 	params.phase = xplm_FlightLoop_Phase_AfterFlightModel;
 	params.structSize = sizeof(params);
@@ -224,7 +271,7 @@ void	draw_hello_world(XPLMWindowID in_window_id, void* in_refcon)
 
 
 
-	XPLMDrawString(col_white, l + 20, t - 60, "Uncorrected Baro Altitude:", NULL, xplmFont_Proportional);
+	XPLMDrawString(col_white, l + 20, t - 90, "AGL Radio Altitude:", NULL, xplmFont_Proportional);
 	XPLMDrawNumber(col_white, l + 20, t - 50, visibility, 1, 5, 0, xplmFont_Proportional);
-	XPLMDrawNumber(col_white, l + 40, t - 70, uncorrected_baro_altitude, 1, 5, 0, xplmFont_Proportional);
+	XPLMDrawNumber(col_white, l + 40, t - 70, radioaltitude, 1, 5, 0, xplmFont_Proportional);
 }

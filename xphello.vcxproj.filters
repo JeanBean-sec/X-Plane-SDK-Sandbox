@@ -39,6 +39,9 @@
     <ClCompile Include="SDK\CHeaders\Wrappers\XPCWidgetAttachments.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="egpws.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dat_trans.h">
@@ -771,6 +774,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SDK\CHeaders\XPLM\XPLMWeather.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="egpws.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

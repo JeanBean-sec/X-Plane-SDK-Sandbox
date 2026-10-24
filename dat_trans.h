@@ -50,7 +50,7 @@ private:
 	//AOA
 	double AOA{};
 public:
-	dat_trans() {};
+	dat_trans();
 	~dat_trans() {};
 	//getters
 	double getUncorrectedBaroAltitude();
