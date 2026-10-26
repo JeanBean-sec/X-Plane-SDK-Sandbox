@@ -1,0 +1,3 @@
+[submodule "egpws"]
+	path = egpws
+	url = https://github.com/JeanBean-sec/egpws_module.git
