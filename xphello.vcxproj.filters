@@ -39,7 +39,13 @@
     <ClCompile Include="SDK\CHeaders\Wrappers\XPCWidgetAttachments.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="egpws.cpp">
+    <ClCompile Include="egpws\mode1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="egpws\mode2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="egpws\customdrefs.h">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -776,7 +782,7 @@
     <ClInclude Include="SDK\CHeaders\XPLM\XPLMWeather.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="egpws.h">
+    <ClInclude Include="egpws\egpws.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

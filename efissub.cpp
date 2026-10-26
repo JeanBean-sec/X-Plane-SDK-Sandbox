@@ -9,6 +9,7 @@
 #include "XPLMProcessing.h"
 #include "dat_trans.h"
 #include "egpws.h"
+#include "customdrefs.h"
 
 #include <string.h>
 #include <fstream>
@@ -67,19 +68,18 @@ double altituderate = 0.0f; //sim/flightmodel/position/vh_ind_fpm
 double radioaltitude = 0.0f; //sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot
 
 
-//initialize objects
+//initialize egpws objects
 static Mode1 mode1;
 
-//initialize sinkrate dataref
+//dataref handles for custom datarefs
+//SINKRATE
 XPLMDataRef drSinkRate = NULL;
-int drSinkRateValue;
+int drSinkRateValue = 0;
 
-int GetSinkRateCB(void* inRefcon) {
-	return drSinkRateValue;
-};
-void SetSinkRateCB(void* inRefcon, int inValue) {
-	drSinkRateValue = inValue;
-}
+//PULLUP
+XPLMDataRef drPullUp = NULL;
+int drPullUpValue = 0;
+
 
 
 static float simpleflightloop(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon) 
@@ -148,23 +148,9 @@ PLUGIN_API int XPluginStart(
 	strcpy(outSig, "xpsdk.examples.helloworld3plugin");
 	strcpy(outDesc, "A Hello World plug-in for the XPLM300 SDK.");
 
-	// DataRef setup for pullup activation
 
+	customdatarefinitialization(); //initialize custom plugin datarefs 
 
-	drSinkRate = XPLMRegisterDataAccessor(
-		"egpws/sinkrate",
-		xplmType_Int,
-		1,
-		GetSinkRateCB, SetSinkRateCB,
-		NULL, NULL,
-		NULL, NULL,
-		NULL, NULL,
-		NULL, NULL,
-		NULL, NULL,
-		NULL, NULL);
-
-	drSinkRate = XPLMFindDataRef("egpws/sinkrate");
-	XPLMSetDatai(drSinkRate, 0); // Initialize to 0 (inactive)
 
 	XPLMMenuID MENU;
 

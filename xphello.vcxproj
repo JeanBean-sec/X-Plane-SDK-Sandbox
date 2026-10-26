@@ -43,7 +43,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS
 ; WINVER=0x0601;_WIN32_WINNT=0x0601;_WIN32_WINDOWS=0x0601;WIN32;_DEBUG;_WINDOWS;_USRDLL;SIMDATA_EXPORTS;IBM=1;XPLM200=1;XPLM210=1;XPLM300=1;XPLM301=1;XPLM302=1;XPLM303=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>SDK\CHeaders\XPLM;SDK\CHeaders\Widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>SDK\CHeaders\XPLM;SDK\CHeaders\Widgets;egpws%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader />
       <PrecompiledHeaderOutputFile>.\Debug\64\$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\Debug\64\</AssemblerListingLocation>
@@ -59,9 +59,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="egpws\customdrefs.h" />
     <ClCompile Include="dat_trans.cpp" />
     <ClCompile Include="efissub.cpp" />
-    <ClCompile Include="egpws.cpp" />
+    <ClCompile Include="egpws\mode1.cpp" />
+    <ClCompile Include="egpws\mode2.cpp" />
     <ClCompile Include="SDK\CHeaders\Wrappers\XPCBroadcaster.cpp" />
     <ClCompile Include="SDK\CHeaders\Wrappers\XPCDisplay.cpp" />
     <ClCompile Include="SDK\CHeaders\Wrappers\XPCListener.cpp" />
@@ -71,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dat_trans.h" />
-    <ClInclude Include="egpws.h" />
+    <ClInclude Include="egpws\egpws.h" />
     <ClInclude Include="include\acfutils\acf_file.h" />
     <ClInclude Include="include\acfutils\airportdb.h" />
     <ClInclude Include="include\acfutils\apps.h" />
